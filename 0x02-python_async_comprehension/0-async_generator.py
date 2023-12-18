@@ -7,7 +7,9 @@ from typing import Generator
 from types import NoneType
 
 
-async def async_generator() -> Generator[float, NoneType, NoneType]:
+async def async_generator():
+
+    # -> Generator[float, NoneType, NoneType]:
     """
         The coroutine will loop 10 times,
         each time asynchronously wait 1 second,
