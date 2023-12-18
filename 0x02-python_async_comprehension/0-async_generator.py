@@ -4,12 +4,9 @@
 import asyncio
 import random
 from typing import Generator
-from types import NoneType
 
 
-async def async_generator():
-
-    # -> Generator[float, NoneType, NoneType]:
+async def async_generator() -> Generator[float, type(None), type(None)]:
     """
         The coroutine will loop 10 times,
         each time asynchronously wait 1 second,
