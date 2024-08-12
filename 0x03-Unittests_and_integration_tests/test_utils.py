@@ -3,9 +3,11 @@
 Unit test for utils.access_nested_map
 """
 import unittest
+import sys
 from parameterized import parameterized, parameterized_class
 from unittest.mock import patch
 from unittest.mock import MagicMock
+current_module = sys.modules[__name__]
 access_nested_map = __import__('utils').access_nested_map
 get_json = __import__('utils').get_json
 memoize = __import__('utils').memoize
@@ -58,8 +60,7 @@ class TestMemoize(unittest.TestCase):
     TestCase class that will hold the
     test methods for utils.memoize
     """
-    @patch("test_utils.TestMemoize.TestClass.a_method")  # Patc for a_method
-    def test_memoize(self, mock_a_method):
+    def test_memoize(self):
         """
         Tests if @memoize decorator caches
         the function call results
@@ -83,8 +84,9 @@ class TestMemoize(unittest.TestCase):
                 """
                 return self.a_method()
 
-        mock_a_method.return_value = 42
-        test_object = TestClass()
-        self.assertEqual(test_object.a_property, 42)
-        self.assertEqual(test_object.a_property, 42)
-        mock_a_method.assert_called_once()
+        with patch.object(TestClass, "a_method") as mock_a_method:
+            mock_a_method.return_value = 42
+            test_object = TestClass()
+            self.assertEqual(test_object.a_property, 42)
+            self.assertEqual(test_object.a_property, 42)
+            mock_a_method.assert_called_once()
