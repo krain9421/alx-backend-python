@@ -8,6 +8,7 @@ from unittest.mock import patch
 from unittest.mock import MagicMock
 access_nested_map = __import__('utils').access_nested_map
 get_json = __import__('utils').get_json
+memoize = __import__('utils').memoize
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -50,3 +51,39 @@ class TestGetJson(unittest.TestCase):
 
         mock_get.return_value = mock_response
         self.assertEqual(get_json(url), payload)
+
+
+class TestMemoize(unittest.TestCase):
+    """
+    TestCase class that will hold the
+    test methods for utils.memoize
+    """
+    @patch("TestClass.a_method") # Patch decorator for a_method
+    def test_memoize(self, mock_a_method):
+        """
+        Tests if @memoize decorator caches
+        the function call results
+        """
+
+        class TestClass:
+            """
+            Inner class for testing
+            """
+            def a_method(self):
+                """
+                Inner method for testing
+                """
+                return 42
+
+            @memoize
+            def a_property(self):
+                """
+                Inner memoized method for
+                testing
+                """
+                return self.a_method()
+
+        mock_a_method.return_value = 42
+        self.assertEqual(TestClass.a_property, mock_a_method.return_value)
+        self.assertEqual(TestClass.a_property, mock_a_method.return_value)
+        mock_a_method.assert_called_once()
