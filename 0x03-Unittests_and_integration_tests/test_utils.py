@@ -58,7 +58,7 @@ class TestMemoize(unittest.TestCase):
     TestCase class that will hold the
     test methods for utils.memoize
     """
-    @patch("TestClass.a_method") # Patch decorator for a_method
+    @patch("TestClass.a_method")  # Patch decorator for a_method
     def test_memoize(self, mock_a_method):
         """
         Tests if @memoize decorator caches
