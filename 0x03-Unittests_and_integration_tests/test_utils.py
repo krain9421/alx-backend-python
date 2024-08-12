@@ -58,7 +58,7 @@ class TestMemoize(unittest.TestCase):
     TestCase class that will hold the
     test methods for utils.memoize
     """
-    @patch("TestClass.a_method")  # Patch decorator for a_method
+    @patch("test_utils.TestMemoize.TestClass.a_method")  # Patc for a_method
     def test_memoize(self, mock_a_method):
         """
         Tests if @memoize decorator caches
@@ -84,6 +84,7 @@ class TestMemoize(unittest.TestCase):
                 return self.a_method()
 
         mock_a_method.return_value = 42
-        self.assertEqual(TestClass.a_property, mock_a_method.return_value)
-        self.assertEqual(TestClass.a_property, mock_a_method.return_value)
+        test_object = TestClass()
+        self.assertEqual(test_object.a_property, 42)
+        self.assertEqual(test_object.a_property, 42)
         mock_a_method.assert_called_once()
